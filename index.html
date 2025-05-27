@@ -3,38 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <title>Nar Tour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f2f2f2; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin:0; padding:0;
+      background:#fafafa;
+    }
     header {
       position: fixed; top: 0; left: 0; right: 0;
       background: #8e0e0e; color:white; padding:10px 20px;
       display:flex; align-items:center; z-index:1000;
     }
-    header a { color:white; text-decoration:none; display:flex; align-items:center; }
-    header img { height:40px; margin-right:10px; }
-    header h1 { margin:0; font-size:22px; flex:1; }
-    .controls select { margin-left:10px; padding:5px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; padding:100px 20px 20px; }
-    .card { position:relative; overflow:hidden; cursor:pointer; background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:transform 0.3s; }
-    .card:hover { transform:scale(1.03); }
+    header a {
+      color:white; text-decoration:none; display:flex; align-items:center;
+    }
+    header img {
+      height:40px; margin-right:10px;
+    }
+    header h1 {
+      margin:0; font-size:24px; flex:1; font-family: 'Montserrat', sans-serif;
+    }
+    .controls select {
+      margin-left:10px; padding:5px; border:none; border-radius:4px;
+    }
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+      gap:20px;
+      padding:100px 20px 20px;
+    }
+    .card {
+      position:relative;
+      overflow:hidden;
+      background:white;
+      border-radius:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+      transition:transform 0.3s, box-shadow 0.3s;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+    .card:hover {
+      transform:translateY(-5px);
+      box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    }
     .image-wrapper {
       position: relative;
-      height: 200px;
+      height: 220px;
       overflow: hidden;
     }
     .image-wrapper img {
-      width:100%; height:100%; object-fit:cover; display:block;
-      transition:opacity 0.3s;
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transition:opacity 0.4s;
     }
-    .hover-gif { position:absolute; top:0; left:0; opacity:0; }
-    .card:hover .hover-gif { opacity:1; }
-    .card:hover .static-img { opacity:0; }
+    .hover-gif {
+      position:absolute;
+      top:0; left:0;
+      opacity:0;
+    }
+    .card:hover .hover-gif {
+      opacity:1;
+    }
+    .card:hover .static-img {
+      opacity:0;
+    }
     .title {
-      position:absolute; bottom:0; width:100%;
-      background:rgba(0,0,0,0.5); color:white;
-      text-align:center; padding:10px;
+      position:absolute;
+      bottom:0;
+      width:100%;
+      background:rgba(0,0,0,0.6);
+      color:white;
+      text-align:center;
+      padding:10px;
+      font-family:'Montserrat', sans-serif;
+      font-size:18px;
     }
-    .price { padding:10px; font-weight:bold; text-align:center; }
+    .price {
+      padding:15px 10px 5px;
+      font-weight:bold;
+      text-align:center;
+      font-size:18px;
+      color:#333;
+    }
+    .btn {
+      display:block;
+      width:calc(100% - 20px);
+      margin:10px auto 15px;
+      padding:10px;
+      background:#8e0e0e;
+      color:white;
+      text-align:center;
+      border-radius:6px;
+      text-decoration:none;
+      font-weight:bold;
+      transition:background 0.3s;
+    }
+    .btn:hover {
+      background:#a41515;
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -58,62 +136,67 @@
 </header>
 
 <div class="grid">
-
-  <div class="card" onclick="location.href='baku.html'">
+  <div class="card">
     <div class="image-wrapper">
-      <img src="assets/baku.jpg" alt="" class="static-img">
-      <img src="assets/baku.gif" alt="" class="hover-gif">
+      <img src="assets/baku.jpg" alt="Baku" class="static-img">
+      <img src="assets/baku.gif" alt="Baku GIF" class="hover-gif">
+      <div class="title" id="title-baku"></div>
     </div>
-    <div class="title" id="title-baku"></div>
     <div class="price" id="price-baku"></div>
+    <a href="baku.html" class="btn">Подробнее</a>
   </div>
 
-  <div class="card" onclick="location.href='gabala.html'">
+  <div class="card">
     <div class="image-wrapper">
-      <img src="assets/gabala.jpg" alt="" class="static-img">
-      <img src="assets/gabala.gif" alt="" class="hover-gif">
+      <img src="assets/gabala.jpg" alt="Gabala" class="static-img">
+      <img src="assets/gabala.gif" alt="Gabala GIF" class="hover-gif">
+      <div class="title" id="title-gabala"></div>
     </div>
-    <div class="title" id="title-gabala"></div>
     <div class="price" id="price-gabala"></div>
+    <a href="gabala.html" class="btn">Подробнее</a>
   </div>
 
-  <div class="card" onclick="location.href='shahdag.html'">
+  <div class="card">
     <div class="image-wrapper">
-      <img src="assets/shahdag.jpg" alt="" class="static-img">
-      <img src="assets/shahdag.gif" alt="" class="hover-gif">
+      <img src="assets/shahdag.jpg" alt="Shahdag" class="static-img">
+      <img src="assets/shahdag.gif" alt="Shahdag GIF" class="hover-gif">
+      <div class="title" id="title-shahdag"></div>
     </div>
-    <div class="title" id="title-shahdag"></div>
     <div class="price" id="price-shahdag"></div>
+    <a href="shahdag.html" class="btn">Подробнее</a>
   </div>
 
-  <div class="card" onclick="location.href='guba.html'">
+  <div class="card">
     <div class="image-wrapper">
-      <img src="assets/guba.jpg" alt="" class="static-img">
-      <img src="assets/guba.gif" alt="" class="hover-gif">
+      <img src="assets/guba.jpg" alt="Guba" class="static-img">
+      <img src="assets/guba.gif" alt="Guba GIF" class="hover-gif">
+      <div class="title" id="title-guba"></div>
     </div>
-    <div class="title" id="title-guba"></div>
     <div class="price" id="price-guba"></div>
+    <a href="guba.html" class="btn">Подробнее</a>
   </div>
 
-  <div class="card" onclick="location.href='sheki.html'">
+  <div class="card">
     <div class="image-wrapper">
-      <img src="assets/sheki.jpg" alt="" class="static-img">
-      <img src="assets/sheki.gif" alt="" class="hover-gif">
+      <img src="assets/sheki.jpg" alt="Sheki" class="static-img">
+      <img src="assets/sheki.gif" alt="Sheki GIF" class="hover-gif">
+      <div class="title" id="title-sheki"></div>
     </div>
-    <div class="title" id="title-sheki"></div>
     <div class="price" id="price-sheki"></div>
+    <a href="sheki.html" class="btn">Подробнее</a>
   </div>
 
-  <div class="card" onclick="location.href='lahij.html'">
+  <div class="card">
     <div class="image-wrapper">
-      <img src="assets/lahij.jpg" alt="" class="static-img">
-      <img src="assets/lahij.gif" alt="" class="hover-gif">
+      <img src="assets/lahij.jpg" alt="Lahij" class="static-img">
+      <img src="assets/lahij.gif" alt="Lahij GIF" class="hover-gif">
+      <div class="title" id="title-lahij"></div>
     </div>
-    <div class="title" id="title-lahij"></div>
     <div class="price" id="price-lahij"></div>
+    <a href="lahij.html" class="btn">Подробнее</a>
   </div>
 
-</div>
+</div> <!-- конец grid -->
 
 <script>
 const titles = {
