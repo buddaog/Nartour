@@ -2,31 +2,135 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Щеки (Sheki)</title>
+<title>Шахдаг Тур</title>
 <style>
-body { font-family: Arial, sans-serif; margin:20px; }
-a { display:inline-block; margin-bottom:20px; color:#8e0e0e; text-decoration:none; }
-img { max-width:100%; border-radius:8px; }
-.form { margin-top:20px; }
-.form input, .form select { display:block; width:100%; padding:8px; margin-bottom:10px; }
-.form button { padding:10px 20px; background:#8e0e0e; color:white; border:none; cursor:pointer; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f2f2f2; }
+header {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #8e0e0e; color:white; padding:10px 20px;
+  display:flex; align-items:center; z-index:1000;
+}
+header a { color:white; text-decoration:none; display:flex; align-items:center; }
+header img { height:40px; margin-right:10px; }
+header h1 { margin:0; font-size:22px; flex:1; }
+.controls select { margin-left:10px; padding:5px; }
+.content { padding:100px 20px 20px; }
+img { max-width:100%; border-radius:8px; margin-bottom:20px; }
+p { margin-bottom:15px; line-height:1.6; }
+ul { margin:10px 0 20px; }
+.price { font-weight:bold; font-size:18px; margin-bottom:20px; }
 </style>
 </head>
 <body>
-<a href="index.html">&larr; Назад</a>
-<h1>Щеки (Sheki)</h1>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sheki_Karvansaray.jpg/800px-Sheki_Karvansaray.jpg" alt="Щеки (Sheki)">
-<p>Исторический город с дворцами и горным пейзажем.</p>
-<div class="form">
-<h2>Регистрация на тур</h2>
-<select><option>Стандартный</option><option>VIP</option></select>
-<input type="number" placeholder="Количество человек" min="1" value="1">
-<input type="text" placeholder="Имя">
-<input type="text" placeholder="Фамилия">
-<input type="text" placeholder="Страна">
-<input type="date" placeholder="Дата приезда">
-<input type="tel" placeholder="WhatsApp номер">
-<button>Забронировать</button>
+
+<header>
+  <a href="index.html">
+    <img src="assets/logo.png" alt="Nar Tour">
+    <h1>Nar Tour</h1>
+  </a>
+  <div class="controls">
+    <select id="langSelect" onchange="setLanguage()">
+      <option value="az">AZ</option>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+    <select id="currencySelect" onchange="setCurrency()">
+      <option value="AZN">AZN</option>
+      <option value="USD">USD</option>
+    </select>
+  </div>
+</header>
+
+<div class="content">
+  <a href="index.html">&larr; Назад</a>
+  <h2 id="title">Шахдаг</h2>
+
+  <div class="price" id="price">111 AZN</div>
+
+  <div id="desc"></div>
+
+  <h3 id="sightTitle"></h3>
+  <ul id="sights"></ul>
 </div>
+
+<script>
+const content = {
+  ru: {
+    title: "Габала - Шахдаг",
+    desc: `
+      <p>Шахдаг — известный горнолыжный и туристический курорт Азербайджана в живописных горах.</p>
+      <p>Это отличное место как для зимнего катания, так и для летних походов и прогулок.</p>
+      <p>В программу входят катание на канатной дороге, экскурсия по горным тропам и вечерний ужин с панорамным видом.</p>
+    `,
+    sights: ["Курорт Шахдаг", "Горные трассы", "Канатные дороги", "Горные виды"],
+    sightTitle: "Достопримечательности"
+  },
+  az: {
+    title: "Qəbələ - Şahdağ",
+    desc: `
+      <p>Şahdağ — Azərbaycanın məşhur xizək və dağ turizm mərkəzidir.</p>
+      <p>Qışda xizək sürmək, yayda isə dağ yürüşləri və gəzintilər üçün ideal məkandır.</p>
+      <p>Turda kanat yolu, dağ mənzərələri və panoramalı axşam yeməyi daxildir.</p>
+    `,
+    sights: ["Şahdağ kurortu", "Dağ trasları", "Kanat yolları", "Dağ mənzərələri"],
+    sightTitle: "Gəziləcək yerlər"
+  },
+  en: {
+    title: "Gabala - Shahdag",
+    desc: `
+      <p>Shahdag is a famous ski and mountain resort in Azerbaijan's beautiful Caucasus range.</p>
+      <p>Ideal for both winter skiing and summer hiking, with breathtaking views and clean air.</p>
+      <p>The tour includes cable car rides, hiking trails, and a sunset dinner with mountain views.</p>
+    `,
+    sights: ["Shahdag Resort", "Mountain Slopes", "Cable Cars", "Panoramic Views"],
+    sightTitle: "Attractions"
+  }
+};
+
+function setLanguage() {
+  const lang = document.getElementById('langSelect').value;
+  localStorage.setItem('lang', lang);
+  updateContent();
+}
+
+function setCurrency() {
+  const cur = document.getElementById('currencySelect').value;
+  localStorage.setItem('currency', cur);
+  updatePrice();
+}
+
+function loadSettings() {
+  const lang = localStorage.getItem('lang') || 'ru';
+  const currency = localStorage.getItem('currency') || 'AZN';
+  document.getElementById('langSelect').value = lang;
+  document.getElementById('currencySelect').value = currency;
+  updateContent();
+}
+
+function updateContent() {
+  const lang = localStorage.getItem('lang') || 'ru';
+  document.getElementById('title').innerText = content[lang].title;
+  document.getElementById('desc').innerHTML = content[lang].desc;
+  document.getElementById('sightTitle').innerText = content[lang].sightTitle;
+
+  const list = document.getElementById('sights');
+  list.innerHTML = "";
+  content[lang].sights.forEach(s => {
+    const li = document.createElement('li');
+    li.textContent = s;
+    list.appendChild(li);
+  });
+
+  updatePrice();
+}
+
+function updatePrice() {
+  const currency = localStorage.getItem('currency') || 'AZN';
+  document.getElementById('price').innerText = currency === 'AZN' ? '111 AZN' : '111 USD';
+}
+
+loadSettings();
+</script>
+
 </body>
 </html>
