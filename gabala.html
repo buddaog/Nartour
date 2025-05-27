@@ -2,31 +2,138 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Габала</title>
+<title>Gabala Tour</title>
 <style>
-body { font-family: Arial, sans-serif; margin:20px; }
-a { display:inline-block; margin-bottom:20px; color:#8e0e0e; text-decoration:none; }
-img { max-width:100%; border-radius:8px; }
-.form { margin-top:20px; }
-.form input, .form select { display:block; width:100%; padding:8px; margin-bottom:10px; }
-.form button { padding:10px 20px; background:#8e0e0e; color:white; border:none; cursor:pointer; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f2f2f2; }
+header {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #8e0e0e; color:white; padding:10px 20px;
+  display:flex; align-items:center; z-index:1000;
+}
+header a { color:white; text-decoration:none; display:flex; align-items:center; }
+header img { height:40px; margin-right:10px; }
+header h1 { margin:0; font-size:22px; flex:1; }
+.controls select { margin-left:10px; padding:5px; }
+.content { padding:100px 20px 20px; }
+img { max-width:100%; border-radius:8px; margin-bottom:20px; }
+iframe { width:100%; height:315px; border:none; border-radius:8px; margin-bottom:20px; }
+p { margin-bottom:15px; line-height:1.6; }
+ul { margin:10px 0 20px; }
+.price { font-weight:bold; font-size:18px; margin-bottom:20px; }
 </style>
 </head>
 <body>
-<a href="index.html">&larr; Назад</a>
-<h1>Габала</h1>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qabala_river.jpg/800px-Qabala_river.jpg" alt="Габала">
-<p>Водопады, горы и исторические достопримечательности ждут тебя!</p>
-<div class="form">
-<h2>Регистрация на тур</h2>
-<select><option>Стандартный</option><option>VIP</option></select>
-<input type="number" placeholder="Количество человек" min="1" value="1">
-<input type="text" placeholder="Имя">
-<input type="text" placeholder="Фамилия">
-<input type="text" placeholder="Страна">
-<input type="date" placeholder="Дата приезда">
-<input type="tel" placeholder="WhatsApp номер">
-<button>Забронировать</button>
+
+<header>
+  <a href="index.html">
+    <img src="assets/logo.png" alt="Nar Tour">
+    <h1>Nar Tour</h1>
+  </a>
+  <div class="controls">
+    <select id="langSelect" onchange="setLanguage()">
+      <option value="az">AZ</option>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+    <select id="currencySelect" onchange="setCurrency()">
+      <option value="AZN">AZN</option>
+      <option value="USD">USD</option>
+    </select>
+  </div>
+</header>
+
+<div class="content">
+  <a href="index.html">&larr; Назад</a>
+  <h2 id="title">Габала</h2>
+
+  <div class="price" id="price">111 AZN</div>
+
+  <img src="https://source.unsplash.com/1200x800/?forest,river" alt="Gabala">
+
+  <div id="desc"></div>
+
+  <h3 id="sightTitle"></h3>
+  <ul id="sights"></ul>
 </div>
+
+<script>
+const content = {
+  ru: {
+    title: "Габала",
+    desc: `
+      <p>Габала — зелёная жемчужина Азербайджана, окружённая Кавказскими горами. Это идеальное место для тех, кто любит природу, водопады и чистый воздух.</p>
+      <p>Здесь вас ждёт канатная дорога на вершины гор, прогулки по лесным тропам и озёрам, а также дегустация местных сладостей.</p>
+      <p>Отличный выбор для семейного отдыха и активных прогулок.</p>
+    `,
+    sights: ["Туфандаг", "Озеро Нохур", "Водопад Еди", "Лесной парк"],
+    sightTitle: "Достопримечательности"
+  },
+  az: {
+    title: "Qəbələ",
+    desc: `
+      <p>Qəbələ — Azərbaycanın yaşıl incisi, Qafqaz dağları ilə əhatələnmiş gözəl bölgədir. Təmiz hava və sərin çaylar istirahət üçün ideal məkandır.</p>
+      <p>Burada kanat yolu ilə dağ zirvəsinə qalxmaq, meşəliklərdə gəzinti və Nohur gölündə istirahət etmək mümkündür.</p>
+      <p>Ailəvi və aktiv istirahət üçün mükəmməl seçimdir.</p>
+    `,
+    sights: ["Tufandağ", "Nohur gölü", "Yeddi Gözəl şəlaləsi", "Meşə parkı"],
+    sightTitle: "Gəziləcək yerlər"
+  },
+  en: {
+    title: "Gabala",
+    desc: `
+      <p>Gabala is a green paradise in Azerbaijan, surrounded by the Caucasus mountains. A perfect destination for nature lovers, fresh air and waterfalls.</p>
+      <p>Enjoy cable car rides to the mountain tops, forest hiking trails and serene lakes. Don’t miss trying local sweets and fruits.</p>
+      <p>Ideal for family vacations and outdoor adventures.</p>
+    `,
+    sights: ["Tufandag", "Lake Nohur", "Yeddi Gozel Waterfall", "Forest Park"],
+    sightTitle: "Attractions"
+  }
+};
+
+function setLanguage() {
+  const lang = document.getElementById('langSelect').value;
+  localStorage.setItem('lang', lang);
+  updateContent();
+}
+
+function setCurrency() {
+  const cur = document.getElementById('currencySelect').value;
+  localStorage.setItem('currency', cur);
+  updatePrice();
+}
+
+function loadSettings() {
+  const lang = localStorage.getItem('lang') || 'ru';
+  const currency = localStorage.getItem('currency') || 'AZN';
+  document.getElementById('langSelect').value = lang;
+  document.getElementById('currencySelect').value = currency;
+  updateContent();
+}
+
+function updateContent() {
+  const lang = localStorage.getItem('lang') || 'ru';
+  document.getElementById('title').innerText = content[lang].title;
+  document.getElementById('desc').innerHTML = content[lang].desc;
+  document.getElementById('sightTitle').innerText = content[lang].sightTitle;
+
+  const list = document.getElementById('sights');
+  list.innerHTML = "";
+  content[lang].sights.forEach(s => {
+    const li = document.createElement('li');
+    li.textContent = s;
+    list.appendChild(li);
+  });
+
+  updatePrice();
+}
+
+function updatePrice() {
+  const currency = localStorage.getItem('currency') || 'AZN';
+  document.getElementById('price').innerText = currency === 'AZN' ? '111 AZN' : '111 USD';
+}
+
+loadSettings();
+</script>
+
 </body>
 </html>
