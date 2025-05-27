@@ -21,7 +21,11 @@ header h1 { margin:0; flex:1; }
 <img src="assets/logo.png" alt="Nar Tour">
 <h1>Nar Tour</h1>
 <div class="controls">
-<select><option>AZ</option><option>RU</option><option>EN</option></select>
+<select id="langSelect" onchange="changeLanguage()">
+  <option value="ru">RU</option>
+  <option value="az">AZ</option>
+  <option value="en">EN</option>
+</select>
 <select><option>AZN</option><option>USD</option></select>
 </div>
 </header>
@@ -29,30 +33,72 @@ header h1 { margin:0; flex:1; }
 <!-- Галерея туров -->
 <div class="grid">
   <div class="card" onclick="location.href='baku.html'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Baku_City_at_Night.jpg/800px-Baku_City_at_Night.jpg" alt="Ночной тур Баку">
-    <div class="title">Ночной тур Баку</div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Baku_City_at_Night.jpg/800px-Baku_City_at_Night.jpg" alt="">
+    <div class="title" id="title-baku"></div>
   </div>
   <div class="card" onclick="location.href='guba.html'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Xinaliq_2009.jpg" alt="Губа - Хыналыг (2 дня, 1 ночь)">
-    <div class="title">Губа - Хыналыг (2 дня, 1 ночь)</div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Xinaliq_2009.jpg" alt="">
+    <div class="title" id="title-guba"></div>
   </div>
   <div class="card" onclick="location.href='gabala.html'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qabala_river.jpg/800px-Qabala_river.jpg" alt="Габала">
-    <div class="title">Габала</div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qabala_river.jpg/800px-Qabala_river.jpg" alt="">
+    <div class="title" id="title-gabala"></div>
   </div>
   <div class="card" onclick="location.href='shahdag.html'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Shahdag_mountains.jpg/800px-Shahdag_mountains.jpg" alt="Габала - Шахдаг">
-    <div class="title">Габала - Шахдаг</div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Shahdag_mountains.jpg/800px-Shahdag_mountains.jpg" alt="">
+    <div class="title" id="title-shahdag"></div>
   </div>
   <div class="card" onclick="location.href='sheki.html'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sheki_Karvansaray.jpg/800px-Sheki_Karvansaray.jpg" alt="Щеки (Sheki)">
-    <div class="title">Щеки (Sheki)</div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sheki_Karvansaray.jpg/800px-Sheki_Karvansaray.jpg" alt="">
+    <div class="title" id="title-sheki"></div>
   </div>
   <div class="card" onclick="location.href='lahij.html'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Lahij_1.jpg/800px-Lahij_1.jpg" alt="Лахич">
-    <div class="title">Лахич</div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Lahij_1.jpg/800px-Lahij_1.jpg" alt="">
+    <div class="title" id="title-lahij"></div>
   </div>
 </div>
+
+<script>
+const titles = {
+  ru: {
+    baku: "Ночной тур Баку",
+    guba: "Губа - Хыналыг (2 дня, 1 ночь)",
+    gabala: "Габала",
+    shahdag: "Габала - Шахдаг",
+    sheki: "Щеки (Sheki)",
+    lahij: "Лахич"
+  },
+  az: {
+    baku: "Bakı Gecə Turu",
+    guba: "Quba - Xınalıq (2 gün, 1 gecə)",
+    gabala: "Qəbələ",
+    shahdag: "Qəbələ - Şahdağ",
+    sheki: "Şəki",
+    lahij: "Lahıc"
+  },
+  en: {
+    baku: "Baku Night Tour",
+    guba: "Guba - Khinalig (2 days, 1 night)",
+    gabala: "Gabala",
+    shahdag: "Gabala - Shahdag",
+    sheki: "Sheki",
+    lahij: "Lahij"
+  }
+};
+
+function changeLanguage() {
+  const lang = document.getElementById('langSelect').value;
+  document.getElementById('title-baku').innerText = titles[lang].baku;
+  document.getElementById('title-guba').innerText = titles[lang].guba;
+  document.getElementById('title-gabala').innerText = titles[lang].gabala;
+  document.getElementById('title-shahdag').innerText = titles[lang].shahdag;
+  document.getElementById('title-sheki').innerText = titles[lang].sheki;
+  document.getElementById('title-lahij').innerText = titles[lang].lahij;
+}
+
+// Инициализация по умолчанию
+changeLanguage();
+</script>
 
 </body>
 </html>
