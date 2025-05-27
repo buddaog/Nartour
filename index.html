@@ -14,13 +14,6 @@ header h1 { margin:0; flex:1; }
 .card:hover { transform:scale(1.03); }
 .card img { width:100%; display:block; }
 .card .title { position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.5); color:white; text-align:center; padding:10px; }
-
-form { max-width:400px; margin:40px auto; background:white; padding:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
-form input, form select, form button {
-  width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:4px;
-}
-form button { background:#8e0e0e; color:white; border:none; cursor:pointer; }
-form button:hover { background:#a31818; }
 </style>
 </head>
 <body>
@@ -35,56 +28,31 @@ form button:hover { background:#a31818; }
 
 <!-- Галерея туров -->
 <div class="grid">
-  <div class="card" onclick="location.href='baku.html'"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Baku_City_at_Night.jpg/800px-Baku_City_at_Night.jpg" alt="Ночной тур Баку"><div class="title">Ночной тур Баку</div></div>
-  <div class="card" onclick="location.href='guba.html'"><img src="https://upload.wikedia.org/wikipedia/commons/2/2f/Xinaliq_2009.jpg" alt="Губа - Хыналыг (2 дня, 1 ночь)"><div class="title">Губа - Хыналыг (2 дня, 1 ночь)</div></div>
-  <div class="card" onclick="location.href='gabala.html'"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qabala_river.jpg/800px-Qabala_river.jpg" alt="Габала"><div class="title">Габала</div></div>
-  <div class="card" onclick="location.href='shahdag.html'"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Shahdag_mountains.jpg/800px-Shahdag_mountains.jpg" alt="Габала - Шахдаг"><div class="title">Габала - Шахдаг</div></div>
-  <div class="card" onclick="location.href='sheki.html'"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sheki_Karvansaray.jpg/800px-Sheki_Karvansaray.jpg" alt="Щеки (Sheki)"><div class="title">Щеки (Sheki)</div></div>
-  <div class="card" onclick="location.href='lahij.html'"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Lahij_1.jpg/800px-Lahij_1.jpg" alt="Лахич"><div class="title">Лахич</div></div>
+  <div class="card" onclick="location.href='baku.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Baku_City_at_Night.jpg/800px-Baku_City_at_Night.jpg" alt="Ночной тур Баку">
+    <div class="title">Ночной тур Баку</div>
+  </div>
+  <div class="card" onclick="location.href='guba.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Xinaliq_2009.jpg" alt="Губа - Хыналыг (2 дня, 1 ночь)">
+    <div class="title">Губа - Хыналыг (2 дня, 1 ночь)</div>
+  </div>
+  <div class="card" onclick="location.href='gabala.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qabala_river.jpg/800px-Qabala_river.jpg" alt="Габала">
+    <div class="title">Габала</div>
+  </div>
+  <div class="card" onclick="location.href='shahdag.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Shahdag_mountains.jpg/800px-Shahdag_mountains.jpg" alt="Габала - Шахдаг">
+    <div class="title">Габала - Шахдаг</div>
+  </div>
+  <div class="card" onclick="location.href='sheki.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sheki_Karvansaray.jpg/800px-Sheki_Karvansaray.jpg" alt="Щеки (Sheki)">
+    <div class="title">Щеки (Sheki)</div>
+  </div>
+  <div class="card" onclick="location.href='lahij.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Lahij_1.jpg/800px-Lahij_1.jpg" alt="Лахич">
+    <div class="title">Лахич</div>
+  </div>
 </div>
-
-<!-- Форма бронирования -->
-<form id="bookingForm">
-  <h2>Бронирование тура</h2>
-  <input type="text" name="name" placeholder="Имя и фамилия" required>
-  <input type="text" name="country" placeholder="Страна" required>
-  <input type="date" name="date" required>
-  <input type="number" name="people" placeholder="Кол-во людей" required>
-  <input type="text" name="destination" placeholder="Направление" required>
-  <button type="submit">Забронировать</button>
-</form>
-
-<script>
-document.getElementById('bookingForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = {
-    name: form.name.value,
-    country: form.country.value,
-    date: form.date.value,
-    people: form.people.value,
-    destination: form.destination.value
-  };
-
-  fetch('https://script.google.com/macros/s/AKfycbzXowX28ZOLyohMLlLYQFhFd4-BBzWGDRuQH2MEVTwCuh2XvxF9xH1ynjUs70TCR0ZmMQ/exec', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(res => res.json())
-  .then(response => {
-    if (response.status === 'success') {
-      alert('Заявка успешно отправлена!');
-      form.reset();
-    } else {
-      alert('Ошибка: ' + response.message);
-    }
-  })
-  .catch(error => alert('Сбой при отправке данных: ' + error));
-});
-</script>
 
 </body>
 </html>
