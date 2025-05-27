@@ -2,153 +2,19 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Nar Tour | Baku</title>
+<title>Ночной тур Баку</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:20px; background:#f2f2f2; }
-h1, h2 { color:#8e0e0e; }
-.gallery { display:flex; flex-wrap:wrap; gap:10px; }
-.gallery img { width:32%; border-radius:8px; }
-iframe { max-width:100%; border-radius:8px; margin-bottom:20px; }
-ul { padding-left:20px; }
-li { margin-bottom:5px; }
-button { padding:10px 20px; background:#8e0e0e; color:#fff; border:none; border-radius:5px; cursor:pointer; }
-button:hover { background:#a31818; }
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:999; }
-.modal-content { background:#fff; padding:20px; border-radius:8px; max-width:400px; width:90%; }
-.modal-content input, .modal-content select { width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:4px; }
-.modal-content button { width:100%; }
-.close-btn { background:#ccc; color:#333; margin-top:10px; }
-.controls { margin-bottom:20px; }
+body { font-family: Arial, sans-serif; margin:20px; }
+a { display:inline-block; margin-bottom:20px; color:#8e0e0e; text-decoration:none; }
+img { max-width:100%; border-radius:8px; }
 </style>
 </head>
 <body>
-<div class="controls">
-  <label>Язык:</label>
-  <select id="langSelect" onchange="setLanguage()">
-    <option value="ru">RU</option>
-    <option value="az">AZ</option>
-    <option value="en">EN</option>
-  </select>
-</div>
 
-<h1 id="title"></h1>
-<h2 id="photoTitle"></h2>
-<div class="gallery">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flame_Towers_Baku.jpg">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Fountains_Square_Baku.jpg">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Baku_bulvar_night.jpg">
-</div>
-<h2 id="videoTitle"></h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jZ_MbKoyZjE" allowfullscreen></iframe>
-<h2 id="descTitle"></h2>
-<p id="description"></p>
-<h2 id="sightTitle"></h2>
-<ul id="sights"></ul>
-<h2 id="factTitle"></h2>
-<p id="fact"></p>
-
-<button onclick="openModal()" id="bookBtn"></button>
-<div class="modal" id="bookingModal">
-  <div class="modal-content">
-    <h3 id="modalTitle"></h3>
-    <label id="countLabel"></label>
-    <select id="peopleCount" onchange="generateFields()">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-    </select>
-    <div id="peopleFields"></div>
-    <button onclick="submitBooking()" id="submitBtn"></button>
-    <button class="close-btn" onclick="closeModal()">Закрыть</button>
-    <div id="resultMsg"></div>
-  </div>
-</div>
-
-<script>
-const content = {
-  ru: {
-    title: "Ночной тур Баку",
-    photoTitle: "Фото:",
-    videoTitle: "Видео:",
-    descTitle: "Описание:",
-    description: "Баку — столица Азербайджана и один из самых красивых городов Кавказа.",
-    sightTitle: "Достопримечательности:",
-    sights: ["Площадь Фонтанов", "Девичья башня", "Flame Towers", "Приморский бульвар", "Дворец Ширваншахов"],
-    factTitle: "Знаете ли вы?",
-    fact: "Девичья башня — одна из старейших построек Баку, XII век.",
-    bookBtn: "Забронировать тур",
-    modalTitle: "Бронирование тура",
-    countLabel: "Количество участников:",
-    submitBtn: "Отправить заявку"
-  },
-  az: {
-    title: "Bakı Gecə Turu",
-    photoTitle: "Şəkillər:",
-    videoTitle: "Video:",
-    descTitle: "Təsvir:",
-    description: "Bakı — Azərbaycanın paytaxtı və Qafqazın ən gözəl şəhərlərindən biri.",
-    sightTitle: "Gəziləcək yerlər:",
-    sights: ["Fəvvarələr Meydanı", "Qız Qalası", "Flame Towers", "Bulvar", "Şirvanşahlar Sarayı"],
-    factTitle: "Bunu bilirdiniz?",
-    fact: "Qız Qalası Bakının ən qədim abidələrindən biridir, XII əsr.",
-    bookBtn: "Turu bron et",
-    modalTitle: "Turun bron edilməsi",
-    countLabel: "İştirakçı sayı:",
-    submitBtn: "Sorğunu göndər"
-  },
-  en: {
-    title: "Baku Night Tour",
-    photoTitle: "Photos:",
-    videoTitle: "Video:",
-    descTitle: "Description:",
-    description: "Baku is the capital of Azerbaijan and one of the most beautiful cities in the Caucasus.",
-    sightTitle: "Attractions:",
-    sights: ["Fountains Square", "Maiden Tower", "Flame Towers", "Seaside Boulevard", "Palace of Shirvanshahs"],
-    factTitle: "Did you know?",
-    fact: "The Maiden Tower is one of Baku's oldest monuments from the 12th century.",
-    bookBtn: "Book a Tour",
-    modalTitle: "Tour Booking",
-    countLabel: "Number of participants:",
-    submitBtn: "Send request"
-  }
-};
-
-function setLanguage() {
-  const lang = document.getElementById('langSelect').value;
-  const t = content[lang];
-  document.getElementById('title').innerText = t.title;
-  document.getElementById('photoTitle').innerText = t.photoTitle;
-  document.getElementById('videoTitle').innerText = t.videoTitle;
-  document.getElementById('descTitle').innerText = t.descTitle;
-  document.getElementById('description').innerText = t.description;
-  document.getElementById('sightTitle').innerText = t.sightTitle;
-  document.getElementById('factTitle').innerText = t.factTitle;
-  document.getElementById('fact').innerText = t.fact;
-  document.getElementById('bookBtn').innerText = t.bookBtn;
-  document.getElementById('modalTitle').innerText = t.modalTitle;
-  document.getElementById('countLabel').innerText = t.countLabel;
-  document.getElementById('submitBtn').innerText = t.submitBtn;
-  const sightList = document.getElementById('sights');
-  sightList.innerHTML = '';
-  t.sights.forEach(item => {
-    const li = document.createElement('li');
-    li.innerText = item;
-    sightList.appendChild(li);
-  });
-}
-function openModal() { document.getElementById('bookingModal').style.display = 'flex'; generateFields(); }
-function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
-function generateFields() {
-  const count = document.getElementById('peopleCount').value;
-  const container = document.getElementById('peopleFields');
-  container.innerHTML = '';
-  for (let i=1;i<=count;i++) {
-    container.innerHTML += `<input type="text" placeholder="Имя" required><input type="text" placeholder="Фамилия" required>`;
-  }
-}
-function submitBooking() { alert('Заявка отправлена! (сюда вставить скрипт)'); }
-setLanguage();
-</script>
+<a href="index.html">&larr; Назад</a>
+<h1>Ночной тур Баку</h1>
+<img src="https://images.unsplash.com/photo-1597227883909-efad80a73a4e?auto=format&fit=crop&w=1000&q=80" alt="Баку ночь">
+<p>Откройте для себя вечерний Баку — огни Flame Towers, Приморский бульвар и уютные старинные улочки!</p>
 
 </body>
 </html>
