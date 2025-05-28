@@ -1,26 +1,212 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Baku Night Tour</title>
-<style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f2f2f2; }
-header {
-  position: fixed; top: 0; left: 0; right: 0;
-  background: #8e0e0e; color:white; padding:10px 20px;
-  display:flex; align-items:center; z-index:1000;
-}
-header a { color:white; text-decoration:none; display:flex; align-items:center; }
-header img { height:40px; margin-right:10px; }
-header h1 { margin:0; font-size:22px; flex:1; }
-.controls select { margin-left:10px; padding:5px; }
-.content { padding:100px 20px 20px; }
-img { max-width:100%; border-radius:8px; margin-bottom:20px; }
-iframe { width:100%; height:315px; border:none; border-radius:8px; margin-bottom:20px; }
-p { margin-bottom:15px; line-height:1.6; }
-ul { margin:10px 0 20px; }
-.price { font-weight:bold; font-size:18px; margin-bottom:20px; }
-</style>
+  <meta charset="UTF-8">
+  <title>Nar Tour</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #8e0e0e;
+      --secondary-color: #f5f5f5;
+      --text-color: #333;
+      --button-color: #8e0e0e;
+      --card-bg: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary-color: #d32f2f;
+        --secondary-color: #121212;
+        --text-color: #f5f5f5;
+        --button-color: #d32f2f;
+        --card-bg: #1e1e1e;
+      }
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin:0; padding:0;
+      background: var(--secondary-color);
+      color: var(--text-color);
+    }
+
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: var(--primary-color); color:white;
+      padding:10px 20px;
+      display:flex; align-items:center; z-index:1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    header a {
+      color:white; text-decoration:none;
+      display:flex; align-items:center;
+    }
+
+    header img {
+      height:40px; margin-right:10px;
+    }
+
+    header h1 {
+      margin:0; font-size:24px; flex:1;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .controls select {
+      margin-left:10px; padding:5px;
+      border:none; border-radius:4px;
+      background: #fff;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:20px;
+      padding:100px 20px 20px;
+    }
+
+    .card {
+      position:relative;
+      overflow:hidden;
+      background: var(--card-bg);
+      border-radius:12px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.15);
+      transition:transform 0.4s, box-shadow 0.4s;
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .card:hover {
+      transform:translateY(-5px);
+      box-shadow:0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    .image-wrapper {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover .image-wrapper {
+      transform: scale(1.05);
+    }
+
+    .image-wrapper img {
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transition:opacity 0.4s ease;
+    }
+
+    .hover-gif {
+      position:absolute;
+      top:0; left:0;
+      opacity:0;
+    }
+
+    .card:hover .hover-gif {
+      opacity:1;
+    }
+
+    .card:hover .static-img {
+      opacity:0;
+    }
+
+    .title {
+      position:absolute;
+      bottom:0;
+      width:100%;
+      color:white;
+      text-align:center;
+      padding:10px;
+      font-family:'Montserrat', sans-serif;
+      font-size:18px;
+      font-weight:bold;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .price {
+      padding:15px 10px 5px;
+      font-weight:bold;
+      text-align:center;
+      font-size:18px;
+      color:var(--text-color);
+    }
+
+    .btn {
+      display:block;
+      width:calc(100% - 30px);
+      margin:10px auto 15px;
+      padding:10px;
+      background: var(--button-color);
+      color:white;
+      text-align:center;
+      border-radius:6px;
+      text-decoration:none;
+      font-weight:bold;
+      transition:background 0.3s;
+    }
+
+    .btn:hover {
+      background:#a41515;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity:0; transform:translateY(30px); }
+      100% { opacity:1; transform:translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
+      header h1 {
+        font-size:20px;
+      }
+
+      .price {
+        font-size:16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        flex-wrap:wrap;
+        padding:8px 12px;
+      }
+
+      header img {
+        height:30px;
+      }
+
+      header h1 {
+        font-size:18px;
+        margin-bottom:5px;
+      }
+
+      .controls {
+        width:100%;
+        display:flex;
+        justify-content: flex-end;
+      }
+
+      .controls select {
+        font-size:14px;
+        margin-left:6px;
+        padding:4px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        padding:90px 10px 10px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -32,7 +218,7 @@ ul { margin:10px 0 20px; }
   <div class="controls">
     <select id="langSelect" onchange="setLanguage()">
       <option value="az">AZ</option>
-      <option value="ru">RU</option>
+      <option value="ru" selected>RU</option>
       <option value="en">EN</option>
     </select>
     <select id="currencySelect" onchange="setCurrency()">
@@ -42,53 +228,94 @@ ul { margin:10px 0 20px; }
   </div>
 </header>
 
-<div class="content">
-  <a href="index.html">&larr; Назад</a>
-  <h2 id="title">Ночной тур Баку</h2>
+<div class="grid">
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="assets/baku.jpg" alt="Baku" class="static-img">
+      <img src="assets/baku.gif" alt="Baku GIF" class="hover-gif">
+      <div class="title" id="title-baku"></div>
+    </div>
+    <div class="price" id="price-baku"></div>
+    <a href="baku.html" class="btn">Подробнее</a>
+  </div>
 
-  <div class="price" id="price">111 AZN</div>
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="assets/gabala.jpg" alt="Gabala" class="static-img">
+      <img src="assets/gabala.gif" alt="Gabala GIF" class="hover-gif">
+      <div class="title" id="title-gabala"></div>
+    </div>
+    <div class="price" id="price-gabala"></div>
+    <a href="gabala.html" class="btn">Подробнее</a>
+  </div>
 
-  <img src="https://source.unsplash.com/1200x800/?baku,night" alt="Баку ночь">
-  
-  <iframe src="https://www.youtube.com/embed/jZ_MbKoyZjE" allowfullscreen></iframe>
-  
-  <div id="desc"></div>
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="assets/shahdag.jpg" alt="Shahdag" class="static-img">
+      <img src="assets/shahdag.gif" alt="Shahdag GIF" class="hover-gif">
+      <div class="title" id="title-shahdag"></div>
+    </div>
+    <div class="price" id="price-shahdag"></div>
+    <a href="shahdag.html" class="btn">Подробнее</a>
+  </div>
 
-  <h3 id="sightTitle"></h3>
-  <ul id="sights"></ul>
-</div>
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="assets/guba.jpg" alt="Guba" class="static-img">
+      <img src="assets/guba.gif" alt="Guba GIF" class="hover-gif">
+      <div class="title" id="title-guba"></div>
+    </div>
+    <div class="price" id="price-guba"></div>
+    <a href="guba.html" class="btn">Подробнее</a>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="assets/sheki.jpg" alt="Sheki" class="static-img">
+      <img src="assets/sheki.gif" alt="Sheki GIF" class="hover-gif">
+      <div class="title" id="title-sheki"></div>
+    </div>
+    <div class="price" id="price-sheki"></div>
+    <a href="sheki.html" class="btn">Подробнее</a>
+  </div>
+
+  <div class="card">
+    <div class="image-wrapper">
+      <img src="assets/lahij.jpg" alt="Lahij" class="static-img">
+      <img src="assets/lahij.gif" alt="Lahij GIF" class="hover-gif">
+      <div class="title" id="title-lahij"></div>
+    </div>
+    <div class="price" id="price-lahij"></div>
+    <a href="lahij.html" class="btn">Подробнее</a>
+  </div>
+
+</div> <!-- конец grid -->
 
 <script>
-const content = {
+const titles = {
   ru: {
-    title: "Ночной тур Баку",
-    desc: `
-      <p>Баку — современный мегаполис на побережье Каспия. Ночной город особенно прекрасен благодаря огням Flame Towers, уютным улочкам и набережной.</p>
-      <p>На экскурсии вас ждёт вечерняя прогулка по Приморскому бульвару, посещение Девичьей башни, ужин в старом городе и возможность увидеть световое шоу на башнях.</p>
-      <p>Тур стартует в 20:00 и длится около 3 часов.</p>
-    `,
-    sights: ["Flame Towers", "Девичья башня", "Приморский бульвар", "Площадь Фонтанов"],
-    sightTitle: "Достопримечательности"
+    baku: "Ночной тур Баку",
+    gabala: "Габала",
+    shahdag: "Шахдаг",
+    guba: "Губа",
+    sheki: "Щеки (Sheki)",
+    lahij: "Лахыч"
   },
   az: {
-    title: "Bakı Gecə Turu",
-    desc: `
-      <p>Bakı — Xəzər sahilində müasir şəhərdir. Gecə Flame Towers və bulvar işıqları şəhərə xüsusi gözəllik qatır.</p>
-      <p>Tur zamanı bulvarda gəziş, Qız Qalasını ziyarət və şəhərin işıqlı mənzərəsindən zövq alacaqsınız. Axşam yeməyi və işıq şousu da daxil olacaq.</p>
-      <p>Tur 20:00-da başlayır, müddəti təxminən 3 saat.</p>
-    `,
-    sights: ["Flame Towers", "Qız Qalası", "Bulvar", "Fəvvarələr Meydanı"],
-    sightTitle: "Gəziləcək yerlər"
+    baku: "Bakı Gecə Turu",
+    gabala: "Qəbələ",
+    shahdag: "Şahdağ",
+    guba: "Quba",
+    sheki: "Şəki",
+    lahij: "Lahıc"
   },
   en: {
-    title: "Baku Night Tour",
-    desc: `
-      <p>Baku is a modern metropolis on the Caspian coast. At night, the city shines with the lights of Flame Towers, cozy alleys and the seaside boulevard.</p>
-      <p>During the tour, enjoy an evening walk, visit Maiden Tower, dine in the Old City and watch the light show on the towers.</p>
-      <p>The tour starts at 8:00 PM and lasts around 3 hours.</p>
-    `,
-    sights: ["Flame Towers", "Maiden Tower", "Seaside Boulevard", "Fountains Square"],
-    sightTitle: "Attractions"
+    baku: "Baku Night Tour",
+    gabala: "Gabala",
+    shahdag: "Shahdag",
+    guba: "Guba",
+    sheki: "Sheki",
+    lahij: "Lahij"
   }
 };
 
@@ -101,7 +328,7 @@ function setLanguage() {
 function setCurrency() {
   const cur = document.getElementById('currencySelect').value;
   localStorage.setItem('currency', cur);
-  updatePrice();
+  updatePrices();
 }
 
 function loadSettings() {
@@ -114,24 +341,22 @@ function loadSettings() {
 
 function updateContent() {
   const lang = localStorage.getItem('lang') || 'ru';
-  document.getElementById('title').innerText = content[lang].title;
-  document.getElementById('desc').innerHTML = content[lang].desc;
-  document.getElementById('sightTitle').innerText = content[lang].sightTitle;
-
-  const list = document.getElementById('sights');
-  list.innerHTML = "";
-  content[lang].sights.forEach(s => {
-    const li = document.createElement('li');
-    li.textContent = s;
-    list.appendChild(li);
-  });
-
-  updatePrice();
+  const t = titles[lang];
+  document.getElementById('title-baku').innerText = t.baku;
+  document.getElementById('title-gabala').innerText = t.gabala;
+  document.getElementById('title-shahdag').innerText = t.shahdag;
+  document.getElementById('title-guba').innerText = t.guba;
+  document.getElementById('title-sheki').innerText = t.sheki;
+  document.getElementById('title-lahij').innerText = t.lahij;
+  updatePrices();
 }
 
-function updatePrice() {
+function updatePrices() {
   const currency = localStorage.getItem('currency') || 'AZN';
-  document.getElementById('price').innerText = currency === 'AZN' ? '111 AZN' : '111 USD';
+  const price = currency === 'AZN' ? '111 AZN' : '111 USD';
+  ['baku','gabala','shahdag','guba','sheki','lahij'].forEach(id => {
+    document.getElementById('price-'+id).innerText = price;
+  });
 }
 
 loadSettings();
