@@ -4,8 +4,8 @@ function createHeader() {
   
   header.innerHTML = `
     <a href="index.html" class="header-logo">
-      <img src="assets/logo.png" alt="Nar Tour">
-      <h1>Nar Tour</h1>
+      <img src="assets/logo.png" alt="Nar Tour Agency">
+      <h1>Nar Tour Agency</h1>
     </a>
     <div class="controls">
       <select id="langSelect" onchange="setLanguage()">
