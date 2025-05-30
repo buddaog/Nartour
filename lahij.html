@@ -1,142 +1,77 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Лахыч Тур</title>
-<style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f2f2f2; }
-header {
-  position: fixed; top: 0; left: 0; right: 0;
-  background: #8e0e0e; color:white; padding:10px 20px;
-  display:flex; align-items:center; z-index:1000;
-}
-header a { color:white; text-decoration:none; display:flex; align-items:center; }
-header img { height:40px; margin-right:10px; }
-header h1 { margin:0; font-size:22px; flex:1; }
-.controls select { margin-left:10px; padding:5px; }
-.content { padding:100px 20px 20px; }
-img { max-width:100%; border-radius:8px; margin-bottom:20px; }
-p { margin-bottom:15px; line-height:1.6; }
-ul { margin:10px 0 20px; }
-.price { font-weight:bold; font-size:18px; margin-bottom:20px; }
-</style>
+  <meta charset="UTF-8">
+  <title>Lahij Tour - Nar Tour Agency</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<header>
-  <a href="index.html">
-    <img src="assets/logo.png" alt="Nar Tour">
-    <h1>Nar Tour</h1>
-  </a>
-  <div class="controls">
-    <select id="langSelect" onchange="setLanguage()">
-      <option value="az">AZ</option>
-      <option value="ru">RU</option>
-      <option value="en">EN</option>
-    </select>
-    <select id="currencySelect" onchange="setCurrency()">
-      <option value="AZN">AZN</option>
-      <option value="USD">USD</option>
-    </select>
+  <div class="content">
+    <a href="index.html" class="btn" style="display: inline-block; margin: 0 0 24px 0;">&larr; Назад</a>
+    
+    <div class="tour-details">
+      <h2 id="title">Лахыч</h2>
+      <div class="price" id="price">111 AZN</div>
+      <img src="https://source.unsplash.com/1200x800/?village,craft" alt="Lahij">
+      <div id="desc" class="description">
+        <!-- Description content will be loaded by JavaScript -->
+      </div>
+      <h3 id="sightTitle"></h3>
+      <ul id="sights"></ul>
+    </div>
   </div>
-</header>
 
-<div class="content">
-  <a href="index.html">&larr; Назад</a>
-  <h2 id="title">Лахыч</h2>
+  <script src="header.js"></script>
+  <script>
+    const content = {
+      ru: {
+        title: "Лахыч",
+        description: "Лахыч — старинное горное поселение с мощёными улочками, медными мастерскими и старинными домами. Этот уникальный аутентичный поселок хранит древние ремесла и архитектуру Кавказа.",
+        sights: ["Улица ремесленников", "Медные мастерские", "Музей Лахыча"],
+        sightTitle: "Достопримечательности"
+      },
+      az: {
+        title: "Lahıc",
+        description: "Lahıc — qədim dağ kəndi, daş döşənmiş küçələri və mis sənətkarlığı ilə məşhurdur. Burada qədim peşələr və Qafqaz memarlığı qorunub saxlanılıb.",
+        sights: ["Sənətkarlar küçəsi", "Mis emalatxanaları", "Lahıc muzeyi"],
+        sightTitle: "Gəziləcək yerlər"
+      },
+      en: {
+        title: "Lahij",
+        description: "Lahij is an ancient mountain village known for its cobbled streets, copper workshops, and old stone houses. The settlement preserves traditional crafts and Caucasian architecture.",
+        sights: ["Craftsmen Street", "Copper Workshops", "Lahij Museum"],
+        sightTitle: "Attractions"
+      }
+    };
 
-  <div class="price" id="price">111 AZN</div>
+    function setLanguage() {
+      const lang = localStorage.getItem('lang') || 'ru';
+      document.getElementById('title').innerText = content[lang].title;
+      document.getElementById('desc').innerText = content[lang].description;
+      document.getElementById('sightTitle').innerText = content[lang].sightTitle;
+      
+      const list = document.getElementById('sights');
+      list.innerHTML = "";
+      content[lang].sights.forEach(s => {
+        const li = document.createElement('li');
+        li.textContent = s;
+        list.appendChild(li);
+      });
+      
+      updatePrice();
+    }
 
-  <div id="desc"></div>
+    function updatePrice() {
+      const currency = localStorage.getItem('currency') || 'AZN';
+      const price = currency === 'AZN' ? '111 AZN' : '111 USD';
+      document.getElementById('price').innerText = price;
+    }
 
-  <h3 id="sightTitle"></h3>
-  <ul id="sights"></ul>
-</div>
-
-<script>
-const content = {
-  ru: {
-    title: "Лахыч",
-    desc: `
-      <p>Лахыч — старинное горное поселение с мощёными улочками, медными мастерскими и старинными домами.</p>
-      <p>Этот уникальный аутентичный поселок хранит древние ремесла и архитектуру Кавказа.</p>
-      <p>Тур включает прогулку по узким улочкам, посещение мастерских и музея ремесел.</p>
-    `,
-    sights: ["Улица ремесленников", "Медные мастерские", "Музей Лахыча"],
-    sightTitle: "Достопримечательности"
-  },
-  az: {
-    title: "Lahıc",
-    desc: `
-      <p>Lahıc — qədim dağ kəndi, daş döşənmiş küçələri və mis sənətkarlığı ilə məşhurdur.</p>
-      <p>Burada qədim peşələr və Qafqaz memarlığı qorunub saxlanılıb.</p>
-      <p>Tur zamanı sənətkar emalatxanaları və kənd muzeyini ziyarət edəcəksiniz.</p>
-    `,
-    sights: ["Sənətkarlar küçəsi", "Mis emalatxanaları", "Lahıc muzeyi"],
-    sightTitle: "Gəziləcək yerlər"
-  },
-  en: {
-    title: "Lahij",
-    desc: `
-      <p>Lahij is an ancient mountain village known for its cobbled streets, copper workshops, and old stone houses.</p>
-      <p>The settlement preserves traditional crafts and Caucasian architecture.</p>
-      <p>The tour includes a walk through the artisan streets, workshop visits, and a crafts museum.</p>
-    `,
-    sights: ["Craftsmen Street", "Copper Workshops", "Lahij Museum"],
-    sightTitle: "Attractions"
-  }
-};
-
-function setLanguage() {
-  const lang = document.getElementById('langSelect').value;
-  localStorage.setItem('lang', lang);
-  updateContent();
-}
-
-function setCurrency() {
-  const cur = document.getElementById('currencySelect').value;
-  localStorage.setItem('currency', cur);
-  updatePrice();
-}
-
-function loadSettings() {
-  const lang = localStorage.getItem('lang') || 'ru';
-  const currency = localStorage.getItem('currency') || 'AZN';
-  document.getElementById('langSelect').value = lang;
-  document.getElementById('currencySelect').value = currency;
-  updateContent();
-}
-
-function updateContent() {
-  const lang = localStorage.getItem('lang') || 'ru';
-  document.getElementById('title').innerText = content[lang].title;
-  document.getElementById('desc').innerHTML = content[lang].desc;
-  document.getElementById('sightTitle').innerText = content[lang].sightTitle;
-
-  const list = document.getElementById('sights');
-  list.innerHTML = "";
-  content[lang].sights.forEach(s => {
-    const li = document.createElement('li');
-    li.textContent = s;
-    list.appendChild(li);
-  });
-
-  updatePrice();
-}
-
-function updatePrice() {
-  const currency = localStorage.getItem('currency') || 'AZN';
-  document.getElementById('price').innerText = currency === 'AZN' ? '111 AZN' : '111 USD';
-}
-
-loadSettings();
-</script>
-
+    window.onload = function() {
+      setLanguage();
+    };
+  </script>
 </body>
 </html>
-
-  <div style="text-align: center; padding: 20px;">
-    <a href="https://wa.me/yourphonenumber" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/WhatsApp_logo_2023.png" alt="WhatsApp" style="width: 150px; height: auto;">
-    </a>
-  </div>
