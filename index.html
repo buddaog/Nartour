@@ -4,328 +4,138 @@
   <meta charset="UTF-8">
   <title>Nar Tour</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #d32f2f;
-      --secondary-color: #fafafa;
-      --text-color: #333;
-      --card-bg: #ffffff;
-      --button-color: #d32f2f;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --primary-color: #ff5252;
-        --secondary-color: #121212;
-        --text-color: #f5f5f5;
-        --card-bg: #1e1e1e;
-        --button-color: #ff5252;
-      }
-    }
-    body {
-      font-family: 'Open Sans', sans-serif;
-      margin:0;
-      background: linear-gradient(135deg, var(--secondary-color), #e8e8e8);
-      color: var(--text-color);
-    }
-    header {
-      position: fixed; top: 0; left: 0; right: 0;
-      background: linear-gradient(90deg, var(--primary-color), #b71c1c);
-      color:white;
-      padding:12px 20px;
-      display:flex; align-items:center;
-      z-index:1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-    header a {
-      color:white; text-decoration:none;
-      display:flex; align-items:center;
-    }
-    header img {
-      height:42px; margin-right:12px;
-    }
-    header h1 {
-      margin:0; font-size:24px; flex:1;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .controls select {
-      margin-left:10px; padding:6px;
-      border:none; border-radius:5px;
-      background:#fff; color:#333;
-      font-weight:bold;
-    }
-    .grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-      gap:20px;
-      padding:110px 20px 20px;
-    }
-    .card {
-      overflow:hidden;
-      border-radius:14px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.15);
-      background: var(--card-bg);
-      display:flex;
-      flex-direction:column;
-      transition:transform 0.4s, box-shadow 0.4s;
-      animation: fadeInUp 0.8s ease forwards;
-      opacity: 0;
-    }
-    .card:hover {
-      transform:translateY(-6px);
-      box-shadow:0 10px 28px rgba(0,0,0,0.2);
-    }
-    .image-wrapper {
-      position: relative;
-      height: 220px;
-      overflow: hidden;
-      transition: transform 0.4s ease;
-    }
-    .card:hover .image-wrapper {
-      transform: scale(1.05);
-    }
-    .image-wrapper img {
-      width:100%; height:100%;
-      object-fit:cover;
-      display:block;
-      transition:opacity 0.4s ease;
-    }
-    .hover-gif {
-      position:absolute;
-      top:0; left:0;
-      opacity:0;
-    }
-    .card:hover .hover-gif {
-      opacity:1;
-    }
-    .card:hover .static-img {
-      opacity:0;
-    }
-    .title {
-      padding:14px;
-      font-family:'Montserrat', sans-serif;
-      font-size:20px;
-      font-weight:bold;
-      color:white;
-      text-align:center;
-      background: linear-gradient(90deg, var(--primary-color), #a52727);
-    }
-    .price {
-      padding:16px 12px 8px;
-      font-weight:bold;
-      text-align:center;
-      font-size:18px;
-      color:var(--text-color);
-    }
-    .btn {
-      display:block;
-      width:calc(100% - 24px);
-      margin:10px auto 20px;
-      padding:12px;
-      background: var(--button-color);
-      color:white;
-      text-align:center;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:bold;
-      font-family:'Montserrat', sans-serif;
-      transition:background 0.3s, box-shadow 0.3s;
-    }
-    .btn:hover {
-      background:#f44336;
-      box-shadow:0 0 10px rgba(255, 82, 82, 0.6);
-    }
-    @keyframes fadeInUp {
-      0% { opacity:0; transform:translateY(30px); }
-      100% { opacity:1; transform:translateY(0); }
-    }
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      }
-    }
-    @media (max-width: 480px) {
-      header {
-        flex-wrap:wrap;
-        padding:10px 12px;
-      }
-      header img {
-        height:34px;
-      }
-      header h1 {
-        font-size:20px;
-        margin-bottom:5px;
-      }
-      .controls {
-        width:100%;
-        display:flex;
-        justify-content:flex-end;
-      }
-      .controls select {
-        font-size:14px;
-        margin-left:6px;
-        padding:5px;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-        padding:100px 10px 10px;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="content">
+    <div class="grid">
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://buddaog.github.io/Nartour/bakunight_main.jpg" alt="Baku Night Tour">
+        </div>
+        <div class="title" id="title-baku"></div>
+        <div class="price" id="price-baku"></div>
+        <a href="baku.html" class="btn">Подробнее</a>
+      </div>
 
-<header>
-  <a href="index.html">
-    <img src="assets/logo.png" alt="Nar Tour">
-    <h1>Nar Tour</h1>
-  </a>
-  <div class="controls">
-    <select id="langSelect" onchange="setLanguage()">
-      <option value="az">AZ</option>
-      <option value="ru" selected>RU</option>
-      <option value="en">EN</option>
-    </select>
-    <select id="currencySelect" onchange="setCurrency()">
-      <option value="AZN">AZN</option>
-      <option value="USD">USD</option>
-    </select>
-  </div>
-</header>
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="assets/gabala.jpg" alt="Gabala">
+        </div>
+        <div class="title" id="title-gabala"></div>
+        <div class="price" id="price-gabala"></div>
+        <a href="gabala.html" class="btn">Подробнее</a>
+      </div>
 
-<div class="grid">
-  <div class="card">
-    <div class="image-wrapper">
-      <img src="https://buddaog.github.io/Nartouк/bakunight_main.jpg" alt="Baku Night Tour" class="static-img">
-      <img src="assets/baku.gif" alt="Baku GIF" class="hover-gif">
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="assets/shahdag.jpg" alt="Shahdag">
+        </div>
+        <div class="title" id="title-shahdag"></div>
+        <div class="price" id="price-shahdag"></div>
+        <a href="shahdag.html" class="btn">Подробнее</a>
+      </div>
+
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="assets/guba.jpg" alt="Guba">
+        </div>
+        <div class="title" id="title-guba"></div>
+        <div class="price" id="price-guba"></div>
+        <a href="guba.html" class="btn">Подробнее</a>
+      </div>
+
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="assets/sheki.jpg" alt="Sheki">
+        </div>
+        <div class="title" id="title-sheki"></div>
+        <div class="price" id="price-sheki"></div>
+        <a href="sheki.html" class="btn">Подробнее</a>
+      </div>
+
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="assets/lahij.jpg" alt="Lahij">
+        </div>
+        <div class="title" id="title-lahij"></div>
+        <div class="price" id="price-lahij"></div>
+        <a href="lahij.html" class="btn">Подробнее</a>
+      </div>
     </div>
-    <div class="title" id="title-baku"></div>
-    <div class="price" id="price-baku"></div>
-    <a href="baku.html" class="btn">Подробнее</a>
   </div>
 
-  <div class="card">
-    <div class="image-wrapper">
-      <img src="assets/gabala.jpg" alt="Gabala" class="static-img">
-      <img src="assets/gabala.gif" alt="Gabala GIF" class="hover-gif">
-    </div>
-    <div class="title" id="title-gabala"></div>
-    <div class="price" id="price-gabala"></div>
-    <a href="gabala.html" class="btn">Подробнее</a>
-  </div>
+  <script src="header.js"></script>
+  <script>
+    const titles = {
+      ru: {
+        baku: "Ночной тур Баку",
+        gabala: "Габала",
+        shahdag: "Шахдаг",
+        guba: "Губа",
+        sheki: "Щеки (Sheki)",
+        lahij: "Лахыч"
+      },
+      az: {
+        baku: "Bakı Gecə Turu",
+        gabala: "Qəbələ",
+        shahdag: "Şahdağ",
+        guba: "Quba",
+        sheki: "Şəki",
+        lahij: "Lahıc"
+      },
+      en: {
+        baku: "Baku Night Tour",
+        gabala: "Gabala",
+        shahdag: "Shahdag",
+        guba: "Guba",
+        sheki: "Sheki",
+        lahij: "Lahij"
+      }
+    };
 
-  <div class="card">
-    <div class="image-wrapper">
-      <img src="assets/shahdag.jpg" alt="Shahdag" class="static-img">
-      <img src="assets/shahdag.gif" alt="Shahdag GIF" class="hover-gif">
-    </div>
-    <div class="title" id="title-shahdag"></div>
-    <div class="price" id="price-shahdag"></div>
-    <a href="shahdag.html" class="btn">Подробнее</a>
-  </div>
+    function setLanguage() {
+      const lang = document.getElementById('langSelect').value;
+      localStorage.setItem('lang', lang);
+      updateContent();
+    }
 
-  <div class="card">
-    <div class="image-wrapper">
-      <img src="assets/guba.jpg" alt="Guba" class="static-img">
-      <img src="assets/guba.gif" alt="Guba GIF" class="hover-gif">
-    </div>
-    <div class="title" id="title-guba"></div>
-    <div class="price" id="price-guba"></div>
-    <a href="guba.html" class="btn">Подробнее</a>
-  </div>
+    function setCurrency() {
+      const cur = document.getElementById('currencySelect').value;
+      localStorage.setItem('currency', cur);
+      updatePrices();
+    }
 
-  <div class="card">
-    <div class="image-wrapper">
-      <img src="assets/sheki.jpg" alt="Sheki" class="static-img">
-      <img src="assets/sheki.gif" alt="Sheki GIF" class="hover-gif">
-    </div>
-    <div class="title" id="title-sheki"></div>
-    <div class="price" id="price-sheki"></div>
-    <a href="sheki.html" class="btn">Подробнее</a>
-  </div>
+    function loadSettings() {
+      const lang = localStorage.getItem('lang') || 'ru';
+      const currency = localStorage.getItem('currency') || 'AZN';
+      document.getElementById('langSelect').value = lang;
+      document.getElementById('currencySelect').value = currency;
+      updateContent();
+    }
 
-  <div class="card">
-    <div class="image-wrapper">
-      <img src="assets/lahij.jpg" alt="Lahij" class="static-img">
-      <img src="assets/lahij.gif" alt="Lahij GIF" class="hover-gif">
-    </div>
-    <div class="title" id="title-lahij"></div>
-    <div class="price" id="price-lahij"></div>
-    <a href="lahij.html" class="btn">Подробнее</a>
-  </div>
+    function updateContent() {
+      const lang = localStorage.getItem('lang') || 'ru';
+      const t = titles[lang];
+      document.getElementById('title-baku').innerText = t.baku;
+      document.getElementById('title-gabala').innerText = t.gabala;
+      document.getElementById('title-shahdag').innerText = t.shahdag;
+      document.getElementById('title-guba').innerText = t.guba;
+      document.getElementById('title-sheki').innerText = t.sheki;
+      document.getElementById('title-lahij').innerText = t.lahij;
+      updatePrices();
+    }
 
-</div> <!-- конец grid -->
+    function updatePrices() {
+      const currency = localStorage.getItem('currency') || 'AZN';
+      const price = currency === 'AZN' ? '111 AZN' : '111 USD';
+      ['baku','gabala','shahdag','guba','sheki','lahij'].forEach(id => {
+        document.getElementById('price-'+id).innerText = price;
+      });
+    }
 
-<script>
-const titles = {
-  ru: {
-    baku: "Ночной тур Баку",
-    gabala: "Габала",
-    shahdag: "Шахдаг",
-    guba: "Губа",
-    sheki: "Щеки (Sheki)",
-    lahij: "Лахыч"
-  },
-  az: {
-    baku: "Bakı Gecə Turu",
-    gabala: "Qəbələ",
-    shahdag: "Şahdağ",
-    guba: "Quba",
-    sheki: "Şəki",
-    lahij: "Lahıc"
-  },
-  en: {
-    baku: "Baku Night Tour",
-    gabala: "Gabala",
-    shahdag: "Shahdag",
-    guba: "Guba",
-    sheki: "Sheki",
-    lahij: "Lahij"
-  }
-};
-
-function setLanguage() {
-  const lang = document.getElementById('langSelect').value;
-  localStorage.setItem('lang', lang);
-  updateContent();
-}
-
-function setCurrency() {
-  const cur = document.getElementById('currencySelect').value;
-  localStorage.setItem('currency', cur);
-  updatePrices();
-}
-
-function loadSettings() {
-  const lang = localStorage.getItem('lang') || 'ru';
-  const currency = localStorage.getItem('currency') || 'AZN';
-  document.getElementById('langSelect').value = lang;
-  document.getElementById('currencySelect').value = currency;
-  updateContent();
-}
-
-function updateContent() {
-  const lang = localStorage.getItem('lang') || 'ru';
-  const t = titles[lang];
-  document.getElementById('title-baku').innerText = t.baku;
-  document.getElementById('title-gabala').innerText = t.gabala;
-  document.getElementById('title-shahdag').innerText = t.shahdag;
-  document.getElementById('title-guba').innerText = t.guba;
-  document.getElementById('title-sheki').innerText = t.sheki;
-  document.getElementById('title-lahij').innerText = t.lahij;
-  updatePrices();
-}
-
-function updatePrices() {
-  const currency = localStorage.getItem('currency') || 'AZN';
-  const price = currency === 'AZN' ? '111 AZN' : '111 USD';
-  ['baku','gabala','shahdag','guba','sheki','lahij'].forEach(id => {
-    document.getElementById('price-'+id).innerText = price;
-  });
-}
-
-loadSettings();
-</script>
-
+    loadSettings();
+  </script>
 </body>
 </html>
